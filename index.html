@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset=utf-8 />
+<title>Vector | GIS Data Editor</title>
+<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" crossorigin=""/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet.pm@0.25.0/dist/leaflet.pm.css" />
+<link rel="stylesheet" href="assets/w3.css" />
+<link rel="stylesheet" href="assets/style.css" />
+<link rel="icon" type="image/png" href="img/favicon.png" />
+</head>
+<body>
+<!--SIDEBAR-->
+<div class="w3-sidebar w3-card">
+	<img src="img/logo-main.svg" style="height:36px;display:block; margin:auto; margin-top:5px;">
+	<hr>
+	<div class="w3-center" style="margin-top: 20px;">
+		<button id="open-fs" class="w3-button w3-round-xxlarge w3-card">Add Service</button>
+	</div>
+	<div class="w3-container" style="color:#555;">
+		<p>A better way to edit.<p>
+		<p class="w3-small"><a href="info.html" target="_blank" class="w3-blue-text" style="font-weight:bold;">Vector</a> is a simple GIS editor for <a href="https://enterprise.arcgis.com/en/server/latest/publish-services/linux/what-is-a-feature-service-.htm" target="_blank">Esri Feature</a> &amp; <a href="http://enterprise.arcgis.com/en/server/latest/publish-services/linux/what-is-a-map-service.htm" target="_blank">Map Services</a>.</p>
+	</div>
+	<div id="layer-container"></div>
+	<div class="w3-container w3-small w3-blue-text w3-center" style="position:fixed;bottom:5px;width:inherit;">
+		<a href="info.html" target="_blank">Information</a>
+		
+	</div>
+</div>
+<!--MAP-->
+<div id="map"></div>
+<!--EDIT PANE-->
+<div id="edit-pane" class="w3-card w3-animate-right">
+<header class="w3-container w3-blue">
+	<span class="w3-button w3-display-topright" id="close-edit-pane" title="close & don't save">&times;</span>
+	<div id="edit-pane-title">Title</div>
+</header>
+<section class="w3-panel">
+	<button id="edit-feature" class="w3-button w3-round-xxlarge w3-card">Edit</button>
+	<button id="save-new-feature" class="w3-button w3-green w3-round-xxlarge w3-card w3-hide">Save</button>
+	<button id="save-feature" class="w3-button w3-green w3-round-xxlarge w3-card" disabled>Save</button>
+	<button id="delete-feature" class="w3-button w3-red w3-round-xxlarge w3-card">Delete</button>
+</section>
+<section class="w3-panel" id="attribute-pane-container">
+	<ul class="w3-ul w3-border" id="attribute-pane"></ul>
+</section>
+</div>
+<!--LAT LNG PANE-->
+<div id="lat-lng-pane" class="w3-tiny"></div>
+<div id="snackbar" class="w3-round w3-center w3-card"></div>
+<!--ADD SERVICE MODAL-->
+<div id="modal-fs" class="w3-modal">
+	<div class="w3-modal-content w3-card">
+	  <header class="w3-container w3-blue"> 
+		<span class="w3-button w3-display-topright close-modal">&times;</span>
+		<h3>Add Service</h3>
+	  </header>
+	  <form class="w3-container" id="fs-form">
+		  <p>
+			<label>Service URL</label>
+			<input class="w3-input w3-border" type="text" id="fs-url" placeholder="Example: http://sampleserver6.arcgisonline.com/arcgis/rest/services/Hurricanes/MapServer/1">
+		  </p>
+		  <div class="w3-hide w3-panel w3-round" id="fs-message"></div>
+		  <div class="w3-hide" id="fs-credential">
+			  <p>      
+				<label>Token URL</label>
+				<input type="checkbox" id="isHosted"><label class="w3-small w3-blue-text">Hosted Feature Service?</label>
+				<input class="w3-input w3-border" type="text" id="fs-tokenurl" placeholder="Example: https://sampleserver6.arcgisonline.com/arcgis/tokens/generateToken">
+			  </p>
+			  <p>      
+				<label>User Name</label>
+				<input class="w3-input w3-border" type="text" id="fs-username" placeholder="User Name">
+			  </p>
+			  <p>      
+			  <label>Password</label>
+			  <input class="w3-input w3-border" type="password" id="fs-password" placeholder="Password">
+			  </p>
+			  <div class="w3-hide w3-panel w3-round" id="fs-credential-message"></div> 
+		  </div>
+		  <p class="w3-right-align">
+			<button id="fs-validate" class="w3-button w3-blue w3-round-xxlarge w3-card" type="submit">Validate Service</button>
+			<button id="fs-validate-credential" class="w3-button w3-blue w3-round-xxlarge w3-card" type="submit" disabled>Validate Credentials</button>
+			<button id="fs-addToMap" class="w3-button w3-blue w3-round-xxlarge w3-card" type="submit" disabled>Add to Map</button>
+		  </p> 
+	  </form>
+	</div>
+</div>
+<!--DELETE MODAL-->
+<div id="modal-delete-check" class="w3-modal">
+	<div class="w3-modal-content w3-card" style="max-width:500px;">
+	  <header class="w3-container w3-blue"> 
+		<span class="w3-button w3-display-topright close-modal">&times;</span>
+		<h3>Delete</h3>
+	  </header>
+	  <div class="w3-container w3-center">
+		<p>Are you sure you want to delete the feature?</p>
+		<p>
+			<button id="delete-feature-forever" class="w3-button w3-red w3-round-xxlarge w3-card">Yes, Delete</button>
+			<button class="w3-button w3-green w3-round-xxlarge w3-card close-modal">No, Don't Delete</button>
+		</p>  
+	  </div>
+	</div>
+</div>
+<!--REMOVE MODAL-->
+<div id="modal-remove-check" class="w3-modal">
+	<div class="w3-modal-content w3-card" style="max-width:500px;">
+	  <header class="w3-container w3-blue"> 
+		<span class="w3-button w3-display-topright close-modal">&times;</span>
+		<h3>Remove</h3>
+	  </header>
+	  <div class="w3-container w3-center">
+		<p>Are you sure you want to remove <span id="removeName"></span>?</p>
+		<p>
+			<button id="remove-service" class="w3-button w3-red w3-round-xxlarge w3-card">Yes, Remove</button>
+			<button class="w3-button w3-green w3-round-xxlarge w3-card close-modal">No, Don't Remove</button>
+		</p>  
+	  </div>
+	</div>
+</div>
+<!--STYLE MODAL-->
+<div id="modal-style" class="w3-modal">
+	<div class="w3-modal-content w3-card">
+		<header class="w3-container w3-blue"> 
+			<span class="w3-button w3-display-topright close-modal">&times;</span>
+			<h3>Style - <span id="styleName"></span></h3>
+		</header>
+		<form class="w3-container">
+			<h3 class="w3-blue-text">Stroke</h3>
+			<div class="w3-border">
+			<div class="w3-row">
+				<div class="w3-third w3-container">
+					<p>Draw Stroke<br>
+						<input class="w3-radio" type="radio" name="style-stroke" value=true>
+						<label>Yes</label>
+
+						<input class="w3-radio" type="radio" name="style-stroke" value=false>
+						<label>No</label>
+					</p>
+				</div>
+				<div class="w3-third w3-container">
+					<p>
+						<label>Stroke Color</label><br>
+						<input class="color-picker" id="style-stroke-color" type="color" value="#000000">
+					</p>
+				</div>
+				<div class="w3-third w3-container">
+					<p>
+						<label>Stroke Opacity <b id="style-stroke-opacity-value"></b></label>
+						<input class="slider" id="style-stroke-opacity" type="range"  min=0 max=1 step=0.1 >
+					</p>
+				</div>
+			</div>
+			<div class="w3-row">
+				<div class="w3-third w3-container pt-hide">
+					<p>Dashed Stroke<br>
+						<input class="w3-radio" type="radio" name="style-dash" value="null">
+						<label>None</label>
+
+						<input class="w3-radio" type="radio" name="style-dash" value="4 4">
+						<label>Short</label>
+						
+						<input class="w3-radio" type="radio" name="style-dash" value="8 8">
+						<label>Long</label>
+					</p>
+				</div>
+				<div class="w3-twothird w3-container notPt-hide">
+					<p>
+						<label>Circle Radius <b><span id="style-radius-value"></span>px</b></label>
+						<input class="slider" id="style-radius" type="range"  min=4 max=14>
+					</p>
+				</div>
+				<div class="w3-third w3-container">
+					<p>
+						<label>Stroke Width <b><span id="style-stroke-width-value"></span>px</b></label>
+						<input class="slider" id="style-stroke-width" type="range"  min=1 max=10>
+					</p>
+				</div>
+				<div class="w3-third w3-container pt-hide">
+					<p>Line Cap<br>
+						<input class="w3-radio" type="radio" name="style-line-cap" value="round">
+						<label>Round</label>
+
+						<input class="w3-radio" type="radio" name="style-line-cap" value="butt">
+						<label>Butt</label>
+						
+						<input class="w3-radio" type="radio" name="style-line-cap" value="square">
+						<label>Square</label>
+					</p>
+				</div>
+			</div>
+			</div>
+			<h3 class="w3-blue-text line-hide">Fill</h3>
+			<div class="w3-row w3-border line-hide">
+				<div class="w3-third w3-container">
+					<p>Draw Fill<br>
+						<input class="w3-radio" type="radio" name="style-fill" value=true>
+						<label>Yes</label>
+
+						<input class="w3-radio" type="radio" name="style-fill" value=false>
+						<label>No</label>
+					</p>
+				</div>
+				<div class="w3-third w3-container">
+					<p>
+						<label>Fill Color</label><br>
+						<input class="color-picker" id="style-fill-color" type="color" value="#000000">
+					</p>
+				</div>
+				<div class="w3-third w3-container">
+					<p>
+						<label>Fill Opacity <b id="style-fill-opacity-value"></b></label>
+						<input class="slider" id="style-fill-opacity" type="range"  min=0 max=1 step=0.1>
+					</p>
+				</div>
+			</div>
+			<p class="w3-right-align">
+				<button id="style-service-submit" class="w3-button w3-blue w3-round-xxlarge w3-card" type="submit">Apply Style</button>
+			</p> 
+		</form>
+	</div>
+</div>
+<script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js" integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA==" crossorigin=""></script>
+<script src="https://unpkg.com/esri-leaflet@2.2.3/dist/esri-leaflet.js" integrity="sha512-YZ6b5bXRVwipfqul5krehD9qlbJzc6KOGXYsDjU9HHXW2gK57xmWl2gU6nAegiErAqFXhygKIsWPKbjLPXVb2g==" crossorigin=""></script>
+<script src="https://unpkg.com/leaflet.pm@0.25.0/dist/leaflet.pm.min.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

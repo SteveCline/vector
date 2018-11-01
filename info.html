@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset=utf-8 />
+<title>Vector | Information</title>
+<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+
+<link rel="stylesheet" href="assets/w3.css" />
+<link rel="icon" type="image/png" href="img/favicon.png" />
+</head>
+
+<style>
+body{color:#555;}
+.urls {
+	color:#000;
+	font-family: "Consolas", "Andale Mono", "Lucida Console", "Monaco", monospace;
+	font-size:0.94em;
+}
+</style>
+<body>
+<div class="w3-container">
+	<div class="w3-content">
+		<div class="w3-center" style="padding-top:5px;">
+			<a href="index.html" target="_blank"><img src="img/logo-main.svg" style="height:42px;"></a>
+			<p>A better way to edit.<p>
+		</div>
+		<h3 class="w3-blue-text">About</h3>
+		<hr>
+		<p>Vector is a free GIS viewer and editing tool. It is intended for GIS users who create and manage their data in <a href="https://www.esri.com/en-us/home" target="_blank">Esri</a>'s <a href="http://enterprise.arcgis.com/en/server/latest/get-started/windows/what-is-arcgis-for-server-.htm" target="_blank">ArcServer</a> and/or <a href="https://doc.arcgis.com/en/arcgis-online/reference/what-is-agol.htm" target="_blank">ArcGIS Online</a>. If you use public or private <a href="https://enterprise.arcgis.com/en/server/latest/publish-services/linux/what-is-a-feature-service-.htm" target="_blank">Feature Services</a>, <a href="http://enterprise.arcgis.com/en/server/latest/publish-services/linux/what-is-a-map-service.htm" target="_blank">Map Services</a>, or <a href="https://doc.arcgis.com/en/arcgis-online/manage-data/publish-features.htm" target="_blank">Hosted Feature Services</a> this tool is for you.</p>
+		<p>Vector exists not to replace fully-featured desktop GIS software. Instead, it is intended to be an alternative experience for viewing and editing your data over the web. It provides a simple interface to create and edit both geometry and attribute data. Vector does not have the complete editing tools of desktop software, but it is a great option for most editing situations.</p>
+		<p>Vector was built using the open source libraries of <a href="https://leafletjs.com/" target="_blank">Leaflet</a>, <a href="http://esri.github.io/esri-leaflet/" target="_blank">Esri Leaflet</a>, and <a href="https://github.com/codeofsumit/leaflet.pm" target="_blank">Leaflet Geometry Management</a>. These are all awesome projects. A big thank you goes out to the creators and maintainers of them. <a href="https://twitter.com/SteveClineBird" target="_blank">Steve Cline</a> created Vector, if you use it and like, feel free to let him know.</p>
+		<h3 class="w3-blue-text">Help</h3>
+		<hr>
+		<p><b>Connecting to your Services</b><p>
+		<p>Vector is designed for use with Esri <a href="https://enterprise.arcgis.com/en/server/latest/publish-services/linux/what-is-a-feature-service-.htm" target="_blank">Feature Services</a>, <a href="http://enterprise.arcgis.com/en/server/latest/publish-services/linux/what-is-a-map-service.htm" target="_blank">Map Services</a> and <a href="https://doc.arcgis.com/en/arcgis-online/manage-data/publish-features.htm" target="_blank">Hosted Feature Services</a>. To connect to a layer in your service, either public or private, you must first enter a valid service layer URL, including the array based number at the end. This is done through the 'Add Service' button.</p>
+		<div class="w3-border w3-panel w3-round urls">
+		<p>Example Service URL<br>https://sampleserver6.arcgisonline.com/arcgis/rest/services/Hurricanes/MapServer/1</p>
+		</div>
+		<p><b>Authentication</b><p>
+		<p>Vector uses the <a href="https://developers.arcgis.com/rest/" target="_blank">ArcGIS REST API</a> to do <a href="http://enterprise.arcgis.com/en/server/latest/administer/linux/acquiring-arcgis-tokens.htm" target="_blank">token based authentication</a>. If your service requires authentication, you will be prompted to provide a Token URL to your server and your user name and password credentials. Vector sets all tokens to expire in 12 hours.  If you wish to connect to a Hosted Feature Layer from ArcGIS Online, click the checkbox and it will populate the appropriate Token URL from below. Provide a user name and password for an authorized <a href="http://pro.arcgis.com/en/pro-app/get-started/named-user-licenses.htm" target="_blank">Named User</a> of the service from your ArcGIS Online account.</p>
+		<div class="w3-border w3-panel w3-round urls">
+		<p>Example Server Token URL<br>https://sampleserver6.arcgisonline.com/arcgis/tokens/generateToken</p>
+		<p>ArcGIS Online Token URL<br>https://www.arcgis.com/sharing/rest/generateToken</p>
+		</div>
+		<p><b>Editing Capabilities</b><p>
+		<p>When you create a Feature Service or Map Service, you must configure which editing capabilites you would like. If no editing capabilites are set, you may still add the service layer to Vector but it will be view only. As a view only service layer, you will still be able to style and view feature attributes, but you will not be able to edit the data. If you would like to test a view only service layer, refer to the example Service URL above.</p>
+		<p><b>Editing Tips</b><p>
+		<p>To create a new feature, hover over the three vertical dots that are located right of the layer name in the sidebar. Click the top option with the pencil icon. For point data, click on the map once, to place a new point. For line and polygon data, click once to draw vertices of the new feature and double click to complete drawing. Alternatively, you may also single click on the first vertex of a polygon feature or the last vertex of a line feature to the complete drawing. This second method is recommended.</p>
+		<p>To edit a feature, click the feature on the map to select it. Then click the 'Edit' button in the layer attribute panel. Right-click a vertex to delete it. To create a new vertex, click and drag the false vertex midpoint between two vertices. To save edits, click the 'Save' button. To abandon edits, click the '&times;' in the attribute panel. This will also unselect the feature and close the panel.</p>
+		<p><b>Snapping</b><p>
+		<p>Snapping functionality is turned on by default. To temporarily disable snapping, hold down 'Alt' on your keyboard.</p>
+		<p><b>Browser Support</b><p>
+		<p>Vector is designed to work in modern browsers such as Chrome, Firefox and Edge on desktop computers. It is not advised to use Vector on tablets, smart phones, or touch screen devices. A computer mouse offers a better editing experience than a finger.</p>
+		<h3 class="w3-blue-text">Legal</h3>
+		<hr>
+		<p>This legal notice is to inform users that Steve Cline, the creator of Vector, is not liable for any possible damages that may occur from viewing, using or editing any data through Vector. This includes stolen authentication credentials, or what others who have access or could gain access to your data through this site could do to it.</p>
+		<p>Using this site to view and/or edit GIS data is <b>at your own risk</b> and it is strongly suggested not to use it for sensitive data. Protecting who has access and editing privileges to GIS data is done through Esri products like ArcServer or ArcGIS Online. Vector is not an Esri product. Protecting your data is your responsibility. Compliance with <a href="https://www.esri.com/en-us/legal/overview" target="_blank">Esri's Terms of Service</a> is your responsibility.</p>
+		<p>This site uses the <a href="https://developers.arcgis.com/rest/" target="_blank">ArcGIS REST API</a> to generate access tokens for users to access protected data. Tokens are set to expire after 12 hours then users must generate a new token to continue accessing the data.</p>
+		<p>This site does not store any of your data, URLs, metadata, user names, or passwords. It simply offers a way for you to interact with Esri services. This site does not use cookies. To restore sessions, this site uses your browser's <a href="https://developer.mozilla.org/en-US/docs/Web/API/Storage/LocalStorage" target="_blank">Local Storage</a> to store service URLs, layer styles, and desired fields for non-protected services. Tokens and passwords are not stored, so protected services will not be restored after the browser window is closed.</p>
+		<div class="w3-center w3-blue-text" style="padding-bottom:100px;">
+			<a href="index.html" target="_blank">Vector GIS Data Editor</a>
+		</div>
+	</div>
+</div>	
+</body>
+</html>

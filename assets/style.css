@@ -1,0 +1,138 @@
+body { margin:0; padding:0;}
+li { overflow: hidden;text-overflow: ellipsis;}
+select:disabled {
+	background-color: rgb(235, 235, 228);
+}
+#map { position: absolute; top:0; bottom:0; left:240px; right:0;}
+#edit-pane {
+	position: fixed;
+	bottom: 24px;
+	right: 0;
+	width: 300px;
+	height: 460px;
+	background: #fff;
+	z-index: 401;
+	overflow: auto;
+	display:none;
+}
+#edit-pane-title {
+	padding: 8px 0;
+	max-width: 238px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+#lat-lng-pane {
+	position: fixed;
+	bottom: 0px;
+	left: 240px;
+	background: rgba(0,0,0,0.4);
+	color: #fff;
+	padding: 0 5px;
+	z-index: 400;
+}
+.remove-field {
+	font-weight: bold;
+	cursor: pointer;
+}
+.field-list-item {
+	margin-top:3px;
+}
+.layer-button {
+    padding: 8px 16px;
+    background-color: #eee;
+	min-width: 38px;
+	text-decoration: none;
+    cursor: pointer;
+}
+.layer-button:hover{
+	background-color: #ddd;
+}
+.layer-item {
+	background-color: #eee;
+	border-top: 1px solid #ddd;
+}
+.layer-item:last-of-type {
+	border-bottom: 1px solid #ddd;
+}
+.layer-item-title {
+	max-width: 200px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+#attribute-pane-container {
+	overflow: auto;
+	height: 342px;
+}
+.color-picker {
+	background:none;
+	border:none;
+	margin-top:4px;
+	height:32px;
+	padding:0;
+}
+.slider {
+    -webkit-appearance: none;
+	width: 100%;
+	height: 10px;
+	margin-top: 15px;
+    background: #ddd;
+    outline: none;
+}
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #4f7ec0;
+    cursor: pointer;
+}
+.slider::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #4f7ec0;
+    cursor: pointer;
+}
+.marker-icon,
+.marker-icon:focus {
+	border: 1px solid #000;
+}
+.map-marker {
+	background: #fff;
+	border: 4px solid #00ffff;
+	border-radius: 50%;
+}
+#snackbar {
+    visibility: hidden;
+	right: 10px;
+	padding: 16px;
+    position: fixed;
+    z-index: 1000;
+    bottom: 26px;
+}
+#snackbar.show {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;} 
+    to {bottom: 26px; opacity: 1;}
+}
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 26px; opacity: 1;}
+}
+@-webkit-keyframes fadeout {
+    from {bottom: 26px; opacity: 1;} 
+    to {bottom: 0; opacity: 0;}
+}
+@keyframes fadeout {
+    from {bottom: 26px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+}
+
+
