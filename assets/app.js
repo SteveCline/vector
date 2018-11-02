@@ -252,7 +252,7 @@ function getServiceCapabilitiesSentence(name, geoType, capabilitiesString, eleme
 
 function getFields(array, element){
 	var p = document.createElement("p");
-	p.innerHTML = "Remove attributes you do not wish to view. Less fields improves performance.<br>";
+	p.innerHTML = "Remove attributes you do not wish to view. Less attributes improves performance.<br>";
 	for (var i = 0; i < array.length; i++) {
 		if (array[i].type != "esriFieldTypeGlobalID" && array[i].type != "esriFieldTypeGeometry" && array[i].type != "esriFieldTypeOID"){
 			var field = document.createElement("span");
