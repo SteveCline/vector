@@ -326,8 +326,13 @@ var fsValidateCredential = document.getElementById("fs-validate-credential").add
 
 function openEditPaneOnFeatureClick(e) {
 	layerTemp.clearLayers();
-    layerTemp.addData(e.target.feature).bringToFront();
-	activeLayer = Number(e.target.options.className);
+    	layerTemp.addData(e.target.feature).bringToFront();
+	if (e.target.options.hasOwnProperty("className")){
+		activeLayer = Number(e.target.options.className);
+	}
+	else if (e.hasOwnProperty("layer")){
+		activeLayer = Number(e.layer.options.className);
+	}
 	setEditPaneInfo(layersList[activeLayer].metadata, e.target);
 	editPane.style.display = "block";
 	//DISABLE BUTTONS IF CAPABILITES DO NOT EXIST
