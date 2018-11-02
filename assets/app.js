@@ -161,12 +161,18 @@ var fsValidateURL = document.getElementById("fs-validate").addEventListener('cli
 			dupURL = url;
 		}
 	}
-	//CHECK FOR NUMBER AT END OF URL
+	//CHECK FOR NUMBER AT END OF URL AND HTTPS
 	var lastCharacter = url.slice(-1);
+	var isHTTPS = url.slice(0,5).toLowerCase();
 	if (isNaN(lastCharacter)){
 		messageBox.classList.remove("w3-hide");
 		messageBox.classList.add("w3-red");
 		messageBox.innerHTML = "<p>Service URL must end with a number</p>";
+	}
+	else if (isHTTPS != "https"){
+		messageBox.classList.remove("w3-hide");
+		messageBox.classList.add("w3-red");
+		messageBox.innerHTML = "<p>Service must be secure over https.</p>";
 	}
 	else if (url === dupURL){
 		messageBox.classList.remove("w3-hide");
