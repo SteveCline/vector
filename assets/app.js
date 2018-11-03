@@ -486,7 +486,7 @@ function onEachFeature(feature, layer) {
 var addToMapButton = document.getElementById("fs-addToMap").addEventListener("click", function(e){
 	e.preventDefault();
 	var url = document.getElementById("fs-url").value;
-	var options = {url: url, precision: 6, fields: getFieldsListArray(), onEachFeature:onEachFeature}; //cacheLayers: true
+	var options = {url: url, precision: 6, fields: getFieldsListArray(), onEachFeature:onEachFeature, cacheLayers: true};
 	tempObj.url = url;
 	layersList.push(tempObj);
 	var numb = layersList.length - 1;
@@ -1222,6 +1222,7 @@ function restorePreviousSession(){
 			precision: 6,
 			fields: data[i].vectorFields,
 			onEachFeature:onEachFeature,
+			cacheLayers: true,
 			style: data[i].style,
 			pointToLayer: function (feature, latlng) {
 				return L.circleMarker(latlng);
