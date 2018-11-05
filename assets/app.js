@@ -210,26 +210,33 @@ function credentialError(error, elementID){
 }
 
 function credentialSuccess(response, elementID){
-	tempObj.metadata = response;
 	var message = document.getElementById(elementID);
-	var validateServiceButton = document.getElementById("fs-validate");
-	var validateCredentialButton = document.getElementById("fs-validate-credential");
-	var addToMapButton = document.getElementById("fs-addToMap");
-	var urlInput = document.getElementById("fs-url");
-	var tokenInput = document.getElementById("fs-tokenurl");
-	var userNameInput = document.getElementById("fs-username");
-	var passwordInput = document.getElementById("fs-password");
-	message.classList.remove("w3-hide");
-	message.classList.add("w3-green");
-	getServiceCapabilitiesSentence(response.name,getGeoType(response.geometryType),response.capabilities, message);
-	getFields(response.fields, message);
-	addToMapButton.disabled = false;
-	validateServiceButton.disabled = true;
-	validateCredentialButton.disabled = true;
-	urlInput.disabled = true;
-	tokenInput.disabled = true;
-	userNameInput.disabled = true;
-	passwordInput.disabled = true;
+	if (response.type === "Feature Layer"){
+		tempObj.metadata = response;
+		var validateServiceButton = document.getElementById("fs-validate");
+		var validateCredentialButton = document.getElementById("fs-validate-credential");
+		var addToMapButton = document.getElementById("fs-addToMap");
+		var urlInput = document.getElementById("fs-url");
+		var tokenInput = document.getElementById("fs-tokenurl");
+		var userNameInput = document.getElementById("fs-username");
+		var passwordInput = document.getElementById("fs-password");
+		message.classList.remove("w3-hide");
+		message.classList.add("w3-green");
+		getServiceCapabilitiesSentence(response.name,getGeoType(response.geometryType),response.capabilities, message);
+		getFields(response.fields, message);
+		addToMapButton.disabled = false;
+		validateServiceButton.disabled = true;
+		validateCredentialButton.disabled = true;
+		urlInput.disabled = true;
+		tokenInput.disabled = true;
+		userNameInput.disabled = true;
+		passwordInput.disabled = true;
+	}
+	else {
+		message.classList.remove("w3-hide");
+		message.classList.add("w3-red");
+		message.innerHTML = "<p>Service must be of type Feature Layer.</p>";
+	}	
 }
 
 function getServiceCapabilitiesSentence(name, geoType, capabilitiesString, element){
