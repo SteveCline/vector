@@ -389,7 +389,12 @@ function setEditPaneInfo(metadata, layer){
 				else {
 					//ELSE CHECK FOR DATA TYPES FOR NON-DOMAIN FIELDS
 					if (fieldsArray[i].type === "esriFieldTypeString"){
-						listItem.innerHTML = "<label>" + prop + "</label><input class='w3-input w3-border attribute-input' type='text'  value='" + props[prop] + "' maxlength='" + fieldsArray[i].length + "' placeholder='String' disabled>";
+						if (props[prop] === "" || props[prop] === null || props[prop] === undefined || props[prop] === "null" || props[prop] === "Null" || props[prop] === "NULL"){
+							listItem.innerHTML = "<label>" + prop + "</label><input class='w3-input w3-border attribute-input' type='text' maxlength='" + fieldsArray[i].length + "' placeholder='String' disabled>";
+						}
+						else {
+							listItem.innerHTML = "<label>" + prop + "</label><input class='w3-input w3-border attribute-input' type='text'  value='" + props[prop] + "' maxlength='" + fieldsArray[i].length + "' placeholder='String' disabled>";
+						}
 					}
 					else if (fieldsArray[i].type === "esriFieldTypeSmallInteger" || fieldsArray[i].type === "esriFieldTypeInteger"){
 						if (props[prop] === "" || props[prop] === null || props[prop] === undefined || props[prop] === "null" || props[prop] === "Null" || props[prop] === "NULL"){
@@ -419,7 +424,12 @@ function setEditPaneInfo(metadata, layer){
 					}
 					else {
 						//FOR OTHER DATA TYPES SUPPLY TEXT FIELD
-						listItem.innerHTML = "<label>" + prop + "</label><input class='w3-input w3-border attribute-input' type='text' value='" + props[prop] + "' disabled>";
+						if (props[prop] === "" || props[prop] === null || props[prop] === undefined || props[prop] === "null" || props[prop] === "Null" || props[prop] === "NULL"){
+							listItem.innerHTML = "<label>" + prop + "</label><input class='w3-input w3-border attribute-input' type='text' disabled>";
+						}
+						else {
+							listItem.innerHTML = "<label>" + prop + "</label><input class='w3-input w3-border attribute-input' type='text' value='" + props[prop] + "' disabled>";
+						}
 					}
 				}
 				//CHECK FOR REQUIRED FIELDS EXCEPT UNIQUE ID
