@@ -1205,6 +1205,11 @@ var styleSubmitButton = document.getElementById("style-service-submit").addEvent
 	closeAllModalsAndClearForms();
 });
 
+function getStoredLocation(){
+    var storedLocation = localStorage.getItem("location");
+    return JSON.parse(storedLocation);
+}
+
 function getStoredData(){
     var storedData = localStorage.getItem("data");
     return JSON.parse(storedData);
@@ -1259,7 +1264,8 @@ function restorePreviousSession(){
 			}
 		})(i));
 	}
-	
+	var loc = getStoredLocation();
+	map.setView(loc.center,loc.zoom);
 }
 //RESTORE PREVIOUS SESSION
 if (localStorage.data != undefined && localStorage.data.length > 2){
@@ -1271,5 +1277,11 @@ if (localStorage.data != undefined && localStorage.data.length > 2){
 		localStorage.clear();
 	}
 }
-
+localStorage.setItem("location", JSON.stringify({zoom:5,center:[38.83,-98.58]}));
+map.on("moveend",function(e){
+	var zoom = map.getZoom();
+	var center = map.getCenter();
+	var obj = {zoom:zoom,center:center};
+	localStorage.setItem("location", JSON.stringify(obj));
+});
 
