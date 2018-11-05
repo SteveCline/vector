@@ -32,7 +32,7 @@ body{color:#555;}
 		<h3 class="w3-blue-text">Help</h3>
 		<hr>
 		<p><b>Connecting to your Services</b><p>
-		<p>Vector is designed for use with secure (https) Esri <a href="https://enterprise.arcgis.com/en/server/latest/publish-services/linux/what-is-a-feature-service-.htm" target="_blank">Feature Services</a>, <a href="http://enterprise.arcgis.com/en/server/latest/publish-services/linux/what-is-a-map-service.htm" target="_blank">Map Services</a> and <a href="https://doc.arcgis.com/en/arcgis-online/manage-data/publish-features.htm" target="_blank">Hosted Feature Services</a>. To connect to a layer in your service, either public or private, you must first enter a valid service layer URL, including the array based number at the end. This is done through the 'Add Service' button. Services over http are not allowed with Vector. As the name Vector implies, services must be Feature Layers. Other types such as Rasters or Tables are not supported.</p>
+		<p>Vector is designed for use with secure (https) Esri <a href="https://enterprise.arcgis.com/en/server/latest/publish-services/linux/what-is-a-feature-service-.htm" target="_blank">Feature Services</a>, <a href="http://enterprise.arcgis.com/en/server/latest/publish-services/linux/what-is-a-map-service.htm" target="_blank">Map Services</a> and <a href="https://doc.arcgis.com/en/arcgis-online/manage-data/publish-features.htm" target="_blank">Hosted Feature Services</a>. To connect to a layer in your service, either public or private, you must first enter a valid service layer URL, including the array based number at the end. This is done through the 'Add Service' button. Services over http are not allowed with Vector. As the name implies, services must be type: Feature Layer. Other types such as Rasters or Tables are not supported.</p>
 		<div class="w3-border w3-panel w3-round urls">
 		<p>Example Service URL<br>https://sampleserver6.arcgisonline.com/arcgis/rest/services/Hurricanes/MapServer/1</p>
 		</div>
@@ -55,6 +55,8 @@ body{color:#555;}
 		<p>Snapping functionality is turned on by default. To temporarily disable snapping, hold down 'Alt' on your keyboard.</p>
 		<p><b>Browser Support</b><p>
 		<p>Vector is designed to work in modern browsers such as Chrome, Firefox and Edge on desktop computers. It is not advised to use Vector on tablets, smart phones, or touch screen devices. A computer mouse offers a better editing experience than a finger.</p>
+		<p><b>Performance</b><p>
+		<p>Vector handles data as GeoJson in the browser. Because of this, data that has many vertices or has thousands of features could bog down the browser causing a poor experience. Vector performs best with smaller datasets with less vertices.</p>
 		<h3 class="w3-blue-text">Legal</h3>
 		<hr>
 		<p>This legal notice is to inform users that Steve Cline, the creator of Vector, is not liable for any possible damages that may occur from viewing, using or editing any data through Vector. This includes stolen authentication credentials, or what others who have access or could gain access to your data through this site could do to it.</p>
