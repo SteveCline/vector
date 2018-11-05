@@ -1,5 +1,5 @@
 //CREATE MAP AND BASEMAPS
-var map = L.map('map', { maptiks_id: "vector"}).setView([38.83,-98.58], 5);
+var map = L.map("map").setView([38.83,-98.58], 5);
 L.esri.options.attributionWidthOffset = 200;
 var basemapStreets = L.esri.basemapLayer("Streets", {maxZoom:20,maxNativeZoom:19}).addTo(map);
 var basemapTopographic = L.esri.basemapLayer("Topographic", {maxZoom:20,maxNativeZoom:19});
