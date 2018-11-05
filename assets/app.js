@@ -851,7 +851,13 @@ function getDateString(number){
 	var string = year + "-" + monthStr + "-" + day;
 	return string;
 }
-
+map.on('pm:drawstart', function(e) {
+	var p = document.querySelectorAll("path");
+	var len = p.length;
+	for (var i = 0; i < len; i++){
+		p[i].classList.remove("leaflet-interactive");
+	}	
+});
 //EDITING STUFF
 map.on('pm:create', function(e) {
 	addedFeature = e.layer.toGeoJSON();
@@ -859,6 +865,11 @@ map.on('pm:create', function(e) {
 	layerTemp.addData(addedFeature);
 	editPane.style.display = "block";
 	map.pm.disableDraw();
+	var p = document.querySelectorAll("path");
+	var len = p.length;
+	for (var i = 0; i < len; i++){
+		p[i].classList.add("leaflet-interactive");
+	}
 });
 //CLOSE EDIT PANE
 var closeEditPane = document.getElementById("close-edit-pane").addEventListener("click", function(e){
