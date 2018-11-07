@@ -566,16 +566,16 @@ function getFieldsListArray(){
 	var fieldItem = document.getElementsByClassName("field-list-item");
 	var fieldsArray = [];
 	var metadataFields = tempObj.metadata.fields;
-	//INCLUDE USER SELECTED FIELDS
-	for (var i = 0; i < fieldItem.length; i++) {
-	    var field = fieldItem[i].innerText.slice(0,-2);
-		fieldsArray.push(field);
-	}
-	//INCLUDE UNIQUE ID FIELD AT END
+	//INCLUDE UNIQUE ID FIELD FIRST
 	for (var i = 0; i < metadataFields.length; i++) {
 	    if (metadataFields[i].type === "esriFieldTypeOID"){
 			fieldsArray.push(metadataFields[i].name);
 		}
+	}
+	//INCLUDE USER SELECTED FIELDS
+	for (var i = 0; i < fieldItem.length; i++) {
+	    var field = fieldItem[i].innerText.slice(0,-2);
+		fieldsArray.push(field);
 	}
 	tempObj.metadata.vectorFields = fieldsArray;
 	return fieldsArray;
