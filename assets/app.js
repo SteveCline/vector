@@ -3,8 +3,8 @@ var map = L.map("map").setView([38.83,-98.58], 5);
 L.esri.options.attributionWidthOffset = 200;
 var basemapStreets = L.esri.basemapLayer("Streets", {maxZoom:20,maxNativeZoom:19}).addTo(map);
 var basemapTopographic = L.esri.basemapLayer("Topographic", {maxZoom:20,maxNativeZoom:19});
-var basemapImagery = L.esri.basemapLayer("Imagery", {maxZoom:22,maxNativeZoom:19});
-var basemapImageryClarity = L.esri.basemapLayer("ImageryClarity", {maxZoom:22,maxNativeZoom:19});
+var basemapImagery = L.esri.basemapLayer("Imagery", {maxZoom:23,maxNativeZoom:19});
+var basemapImageryClarity = L.esri.basemapLayer("ImageryClarity", {maxZoom:23,maxNativeZoom:19});
 //DEFAULT LAYER CONTROL ADD TO MAP
 L.control.layers({
 	"Streets": basemapStreets,
