@@ -1,8 +1,8 @@
 //CREATE MAP AND BASEMAPS
 var map = L.map("map").setView([38.83,-98.58], 5);
 L.esri.options.attributionWidthOffset = 200;
-var basemapStreets = L.esri.basemapLayer("Streets", {maxZoom:23,maxNativeZoom:19,detectRetina:true}).addTo(map);
-var basemapTopographic = L.esri.basemapLayer("Topographic", {maxZoom:23,maxNativeZoom:19,detectRetina:true});
+var basemapStreets = L.esri.basemapLayer("Streets", {maxZoom:23,maxNativeZoom:19}).addTo(map);
+var basemapTopographic = L.esri.basemapLayer("Topographic", {maxZoom:23,maxNativeZoom:19});
 var basemapImagery = L.esri.basemapLayer("Imagery", {maxZoom:23,maxNativeZoom:19});
 var basemapImageryClarity = L.esri.basemapLayer("ImageryClarity", {maxZoom:23,maxNativeZoom:19});
 //DEFAULT LAYER CONTROL ADD TO MAP
