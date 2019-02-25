@@ -1,0 +1,15 @@
+.toggle-info-window-container {
+    position: fixed;
+    z-index: 500;
+    top: 50%;
+    left: 240px;
+    padding: 10px;
+    background: #fff;
+}
+#toggle-icon {
+    height: 25px;
+    width: 25px;
+}
+#info-window .closed {
+    
+}
