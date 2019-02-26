@@ -10,6 +10,9 @@
     height: 25px;
     width: 25px;
 }
-#info-window .closed {
-    
+div.w3-sidebar.closed {
+   left: -240px;   
+}
+div.toggle-info-window-container.closed {
+    left: 0px;
 }
