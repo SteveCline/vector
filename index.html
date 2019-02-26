@@ -8,13 +8,14 @@
 <meta name="keywords" content="vector, vector GIS editor, vector GIS, vector GIS data editor, GIS data editing, GIS viewer, GIS editing, data editing">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" crossorigin=""/>
 <link rel="stylesheet" href="https://unpkg.com/leaflet.pm@1.0.1/dist/leaflet.pm.css" />
+<link rel="stylesheet" href="assets/info-window.css" />
 <link rel="stylesheet" href="assets/w3.css" />
 <link rel="stylesheet" href="assets/style.css" />
 <link rel="icon" type="image/png" href="img/favicon.png" />
 </head>
 <body>
 <!--SIDEBAR-->
-<div class="w3-sidebar w3-card">
+<div id="info-window" class="w3-sidebar w3-card open">
 	<span class="w3-small w3-blue-text" style="position:fixed;top:2px;left:200px;">beta</span>
 	<img src="img/logo-main.svg" style="height:36px;display:block; margin:auto; margin-top:5px;">
 	<hr>
@@ -26,6 +27,11 @@
 		<p class="w3-small"><a href="info.html" target="_blank" class="w3-blue-text" style="font-weight:bold;">Vector</a> is a simple GIS editor for Esri Feature &amp; Map Services.</p>
 	</div>
 	<div id="layer-container"></div>
+</div>
+<div id="toggle-div" class="toggle-info-window-container open">
+    <button id="toggle-info-window" title="Click to hide information window">
+        <img id="toggle-icon" alt="arrow key pointing to the left" src="img/close-arrow.png" />
+    </button>    
 </div>
 <!--MAP-->
 <div id="map"></div>
@@ -223,5 +229,6 @@
 <script src="https://unpkg.com/esri-leaflet@2.2.3/dist/esri-leaflet.js" integrity="sha512-YZ6b5bXRVwipfqul5krehD9qlbJzc6KOGXYsDjU9HHXW2gK57xmWl2gU6nAegiErAqFXhygKIsWPKbjLPXVb2g==" crossorigin=""></script>
 <script src="https://unpkg.com/leaflet.pm@1.0.1/dist/leaflet.pm.min.js"></script>
 <script src="assets/app.js"></script>
+<script src="assets/toggle-window.js"></script>
 </body>
 </html>
