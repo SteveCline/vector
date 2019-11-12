@@ -1,227 +1,135 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset=utf-8 />
-<title>Vector | GIS Data Editor</title>
-<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-<meta name="description" content="Vector is a free GIS viewer and editing tool for Esri Services.">
-<meta name="keywords" content="vector, vector GIS editor, vector GIS, vector GIS data editor, GIS data editing, GIS viewer, GIS editing, data editing">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" crossorigin=""/>
-<link rel="stylesheet" href="https://unpkg.com/leaflet.pm@1.0.1/dist/leaflet.pm.css" />
-<link rel="stylesheet" href="assets/w3.css" />
-<link rel="stylesheet" href="assets/style.css" />
-<link rel="icon" type="image/png" href="img/favicon.png" />
+    <meta charset=utf-8>
+	<meta content="width=device-width,minimum-scale=1" name=viewport>
+	<meta content="Stephen Cline" name=author>
+	<meta content="A Simple GeoJSON data editor for GIS people." name=description>
+	<title>Vector | GeoJSON Editor</title>
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+  integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+  crossorigin=""/>
+	<link rel="stylesheet" href="https://unpkg.com/@geoman-io/leaflet-geoman-free@2.3.0/dist/leaflet-geoman.css" />
+	<link rel="stylesheet" href="assets/style.css" />
+	<link rel="icon" type="image/png" href="assets/favicon.png" />
 </head>
 <body>
-<!--SIDEBAR-->
-<div class="w3-sidebar w3-card">
-	<span class="w3-small w3-blue-text" style="position:fixed;top:2px;left:200px;">beta</span>
-	<img src="img/logo-main.svg" style="height:36px;display:block; margin:auto; margin-top:5px;">
-	<hr>
-	<div class="w3-center" style="margin-top: 20px;">
-		<button id="open-fs" class="w3-button w3-round-xxlarge w3-card">Add Service</button>
+<div id="sidebar">
+	<img src="assets/logo-main.svg" style="height:36px;display:block;margin:auto;margin-top:5px;">
+	<div style="text-align:center;padding:16px 0;">
+		<button id="new-fc" class="btn blue-btn">New GeoJSON</button>
+		<button id="import-fc" class="btn blue-btn">Import GeoJSON</button>
 	</div>
-	<div class="w3-container" style="color:#555;">
-		<p>A better way to edit.<p>
-		<p class="w3-small"><a href="info.html" target="_blank" class="w3-blue-text" style="font-weight:bold;">Vector</a> is a simple GIS editor for Esri Feature &amp; Map Services.</p>
-	</div>
-	<div id="layer-container"></div>
+	<div id="layerBox"></div>
 </div>
-<!--MAP-->
 <div id="map"></div>
-<!--EDIT PANE-->
-<div id="edit-pane" class="w3-card w3-animate-right">
-<header class="w3-container w3-blue">
-	<span class="w3-button w3-display-topright" id="close-edit-pane" title="close & don't save">&times;</span>
-	<div id="edit-pane-title">Title</div>
-</header>
-<section class="w3-panel">
-	<button id="edit-feature" class="w3-button w3-round-xxlarge w3-card">Edit</button>
-	<button id="save-new-feature" class="w3-button w3-green w3-round-xxlarge w3-card w3-hide">Save</button>
-	<button id="save-feature" class="w3-button w3-green w3-round-xxlarge w3-card" disabled>Save</button>
-	<button id="delete-feature" class="w3-button w3-red w3-round-xxlarge w3-card">Delete</button>
-</section>
-<section class="w3-panel" id="attribute-pane-container">
-	<ul class="w3-ul w3-border" id="attribute-pane"></ul>
-</section>
-</div>
-<!--LAT LNG PANE-->
-<div id="lat-lng-pane" class="w3-tiny"></div>
-<div id="snackbar" class="w3-round w3-center w3-card"></div>
-<!--ADD SERVICE MODAL-->
-<div id="modal-fs" class="w3-modal">
-	<div class="w3-modal-content w3-card">
-	  <header class="w3-container w3-blue"> 
-		<span class="w3-button w3-display-topright close-modal">&times;</span>
-		<h3>Add Service</h3>
-	  </header>
-	  <form class="w3-container" id="fs-form">
-		  <p>
-			<label>Service URL</label>
-			<input class="w3-input w3-border" type="text" id="fs-url" placeholder="Example: http://sampleserver6.arcgisonline.com/arcgis/rest/services/Hurricanes/MapServer/1">
-		  </p>
-		  <div class="w3-hide w3-panel w3-round" id="fs-message"></div>
-		  <div class="w3-hide" id="fs-credential">
-			  <p>      
-				<label>Token URL</label>
-				<input type="checkbox" id="isHosted"><label class="w3-small w3-blue-text">Hosted Feature Layer?</label>
-				<input class="w3-input w3-border" type="text" id="fs-tokenurl" placeholder="Example: https://sampleserver6.arcgisonline.com/arcgis/tokens/generateToken">
-			  </p>
-			  <p>      
-				<label>User Name</label>
-				<input class="w3-input w3-border" type="text" id="fs-username" placeholder="User Name">
-			  </p>
-			  <p>      
-			  <label>Password</label>
-			  <input class="w3-input w3-border" type="password" id="fs-password" placeholder="Password">
-			  </p>
-			  <div class="w3-hide w3-panel w3-round" id="fs-credential-message"></div> 
-		  </div>
-		  <p class="w3-right-align">
-			<button id="fs-validate" class="w3-button w3-blue w3-round-xxlarge w3-card" type="button">Validate Service</button>
-			<button id="fs-validate-credential" class="w3-button w3-blue w3-round-xxlarge w3-card" type="button" disabled>Validate Credentials</button>
-			<button id="fs-addToMap" class="w3-button w3-blue w3-round-xxlarge w3-card" type="button" disabled>Add to Map</button>
-		  </p> 
-	  </form>
+<!-- LAT LNG PANE -->
+<div id="lat-lng-pane"></div>
+<!-- EDIT PANE -->
+<div id="edit-pane">
+	<div id="edit-pane-title" class="modal-head"></div>
+	<div style="margin:16px;">
+		<button id="save-feature" class="btn green-btn" title="Save Edits">Save</button>
+		<button id="close-edit-pane" class="btn blue-btn" title="Close and Don't Save Edits">Cancel</button>
+		<button id="delete-feature" class="btn red-btn" title="Delete Feature">Delete</button>
+	</div>
+	<div id="attribute-pane-container">
+		<ul id="attribute-pane"></ul>
 	</div>
 </div>
-<!--DELETE MODAL-->
-<div id="modal-delete-check" class="w3-modal">
-	<div class="w3-modal-content w3-card" style="max-width:500px;">
-	  <header class="w3-container w3-blue"> 
-		<span class="w3-button w3-display-topright close-modal">&times;</span>
-		<h3>Delete</h3>
-	  </header>
-	  <div class="w3-container w3-center">
-		<p>Are you sure you want to delete the feature?</p>
-		<p>
-			<button id="delete-feature-forever" class="w3-button w3-red w3-round-xxlarge w3-card">Yes, Delete</button>
-			<button class="w3-button w3-green w3-round-xxlarge w3-card close-modal">No, Don't Delete</button>
-		</p>  
-	  </div>
+<!-- MODAL NEW FEATURE COLLECTION -->
+<div id="new-fc-modal" class="modal">
+	<div class="modal-body">
+		<div class="modal-head">Create New GeoJSON Feature Collection</div>
+		<div class="modal-content">
+			<label>Name</label>
+			<input type="text" id="new-fc-name" placeholder="Enter a name for your GeoJSON Feature Collection">
+			<label>Geometry Type</label>
+			    <select id="geo-type" name="geo-type">
+					<option value="Polygon">Polygon</option>
+					<option value="LineString">LineString</option>
+					<option value="Point">Point</option>
+				</select>
+			<label>Properties List (Optional)</label>
+			<div id="prop-list">
+				<input type="text" placeholder="Enter a property name">
+			</div>
+			<button class="btn blue-btn" id="add-property">Add Property</button>
+		    <button class="btn red-btn close-modal">Cancel</button>
+		    <button class="btn green-btn" id="create-new-fc">Create Feature Collection</button>
+		</div>
 	</div>
 </div>
-<!--REMOVE MODAL-->
-<div id="modal-remove-check" class="w3-modal">
-	<div class="w3-modal-content w3-card" style="max-width:500px;">
-	  <header class="w3-container w3-blue"> 
-		<span class="w3-button w3-display-topright close-modal">&times;</span>
-		<h3>Remove</h3>
-	  </header>
-	  <div class="w3-container w3-center">
-		<p>Are you sure you want to remove <span id="removeName"></span>?</p>
-		<p>
-			<button id="remove-service" class="w3-button w3-red w3-round-xxlarge w3-card">Yes, Remove</button>
-			<button class="w3-button w3-green w3-round-xxlarge w3-card close-modal">No, Don't Remove</button>
-		</p>  
-	  </div>
+<!-- MODAL UPLOAD GEOJSON -->
+<div class="modal" id="import-file-modal">
+	<div class="modal-body">
+		<div class="modal-head">Import GeoJSON</div>
+		<div class="modal-content">
+			<label>Browse for file(s)</label>
+			<input type="file" class="geojson-file-input" accept=".json,.geojson" multiple>
+		    <button class="btn red-btn close-modal">Cancel</button>
+		    <button class="btn green-btn" id="add-geojson-map">Add GeoJSON to Map</button>
+		</div>
 	</div>
 </div>
-<!--STYLE MODAL-->
-<div id="modal-style" class="w3-modal">
-	<div class="w3-modal-content w3-card">
-		<header class="w3-container w3-blue"> 
-			<span class="w3-button w3-display-topright close-modal">&times;</span>
-			<h3>Style - <span id="styleName"></span></h3>
-		</header>
-		<form class="w3-container">
-			<h3 class="w3-blue-text">Stroke</h3>
-			<div class="w3-border">
-			<div class="w3-row">
-				<div class="w3-third w3-container">
-					<p>Draw Stroke<br>
-						<input class="w3-radio" type="radio" name="style-stroke" value=true>
-						<label>Yes</label>
-
-						<input class="w3-radio" type="radio" name="style-stroke" value=false>
-						<label>No</label>
-					</p>
-				</div>
-				<div class="w3-third w3-container">
-					<p>
-						<label>Stroke Color</label><br>
-						<input class="color-picker" id="style-stroke-color" type="color" value="#000000">
-					</p>
-				</div>
-				<div class="w3-third w3-container">
-					<p>
-						<label>Stroke Opacity <b id="style-stroke-opacity-value"></b></label>
-						<input class="slider" id="style-stroke-opacity" type="range"  min=0 max=1 step=0.1 >
-					</p>
-				</div>
+<!-- MODAL SETTINGS -->
+<div class="modal" id="settings-modal">
+	<div class="modal-body">
+		<div class="modal-head"></div>
+		<div class="modal-content">
+			<label>Rename GeoJSON Feature Collection</label>
+			<input type="text" id="rename-fc" placeholder="Enter a name for your GeoJSON Feature Collection">
+			<label>Properties List</label><span style="float:right;color:#e74c3c;font-size:12px;">Warning: deletes property data for all features</span>
+			<div id="add-remove-prop-list"></div>
+			<button class="btn blue-btn" id="add-property-2">Add Property</button>
+			<div class="box box-red">
+				<button class="btn red-btn close-modal" id="delete-fc">Delete GeoJSON</button> Delete GeoJSON and remove from map
 			</div>
-			<div class="w3-row">
-				<div class="w3-third w3-container pt-hide">
-					<p>Dashed Stroke<br>
-						<input class="w3-radio" type="radio" name="style-dash" value="null">
-						<label>None</label>
-
-						<input class="w3-radio" type="radio" name="style-dash" value="4 4">
-						<label>Short</label>
-						
-						<input class="w3-radio" type="radio" name="style-dash" value="8 8">
-						<label>Long</label>
-					</p>
-				</div>
-				<div class="w3-twothird w3-container notPt-hide">
-					<p>
-						<label>Circle Radius <b><span id="style-radius-value"></span>px</b></label>
-						<input class="slider" id="style-radius" type="range"  min=4 max=14>
-					</p>
-				</div>
-				<div class="w3-third w3-container">
-					<p>
-						<label>Stroke Width <b><span id="style-stroke-width-value"></span>px</b></label>
-						<input class="slider" id="style-stroke-width" type="range"  min=1 max=10>
-					</p>
-				</div>
-				<div class="w3-third w3-container pt-hide">
-					<p>Line Cap<br>
-						<input class="w3-radio" type="radio" name="style-line-cap" value="round">
-						<label>Round</label>
-
-						<input class="w3-radio" type="radio" name="style-line-cap" value="butt">
-						<label>Butt</label>
-						
-						<input class="w3-radio" type="radio" name="style-line-cap" value="square">
-						<label>Square</label>
-					</p>
-				</div>
+			<div class="box box-blue">
+				<a id="download-geojson" style="text-decoration: none;"><button class="btn blue-btn">Download GeoJSON</button></a> Need a shapefile? <a href="http://ogre.adc4gis.com/" target="_blank" style="color:#38f;">Convert Here</a>
 			</div>
-			</div>
-			<h3 class="w3-blue-text line-hide">Fill</h3>
-			<div class="w3-row w3-border line-hide">
-				<div class="w3-third w3-container">
-					<p>Draw Fill<br>
-						<input class="w3-radio" type="radio" name="style-fill" value=true>
-						<label>Yes</label>
-
-						<input class="w3-radio" type="radio" name="style-fill" value=false>
-						<label>No</label>
-					</p>
-				</div>
-				<div class="w3-third w3-container">
-					<p>
-						<label>Fill Color</label><br>
-						<input class="color-picker" id="style-fill-color" type="color" value="#000000">
-					</p>
-				</div>
-				<div class="w3-third w3-container">
-					<p>
-						<label>Fill Opacity <b id="style-fill-opacity-value"></b></label>
-						<input class="slider" id="style-fill-opacity" type="range"  min=0 max=1 step=0.1>
-					</p>
-				</div>
-			</div>
-			<p class="w3-right-align">
-				<button id="style-service-submit" class="w3-button w3-blue w3-round-xxlarge w3-card" type="submit">Apply Style</button>
-			</p> 
-		</form>
+			<button class="btn red-btn close-modal">Cancel</button>
+			<button class="btn green-btn" id="apply-settings">Apply Settings</button>
+		</div>
 	</div>
 </div>
-<script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js" integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA==" crossorigin=""></script>
-<script src="https://unpkg.com/esri-leaflet@2.2.3/dist/esri-leaflet.js" integrity="sha512-YZ6b5bXRVwipfqul5krehD9qlbJzc6KOGXYsDjU9HHXW2gK57xmWl2gU6nAegiErAqFXhygKIsWPKbjLPXVb2g==" crossorigin=""></script>
-<script src="https://unpkg.com/leaflet.pm@1.0.1/dist/leaflet.pm.min.js"></script>
+<!-- MODAL STYLE -->
+<div class="modal" id="style-modal">
+	<div class="modal-body">
+		<div class="modal-head"></div>
+		<div class="modal-content">
+			<div class="grid-container">
+				<div>
+					<label>Stroke Color</label><br>
+					<input class="color-picker" id="style-stroke-color" type="color">
+				</div>
+				<div>
+					<label>Stroke Width <strong id="style-stroke-width-value"></strong></label><br>
+					<input class="slider" id="style-stroke-width" type="range"  min=1 max=10>
+				</div>
+				<div>
+					<label>Fill Color</label><br>
+					<input class="color-picker" id="style-fill-color" type="color">
+				</div>
+				<div>
+					<label>Fill Opacity <b id="style-fill-opacity-value"></b></label><br>
+					<input class="slider" id="style-fill-opacity" type="range"  min=0 max=1 step=0.1>
+				</div>
+				<div></div>
+				<div>
+					<label>Circle Radius <b id="radius-value"></b></label><br>
+					<input class="slider" id="radius" type="range"  min=4 max=14>
+				</div>	
+			</div>
+			<button class="btn red-btn close-modal">Cancel</button>
+			<button class="btn green-btn" id="apply-style">Apply Style</button>
+		</div>
+	</div>
+</div>
+<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+  integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+  crossorigin=""></script>
+<script src="https://unpkg.com/@geoman-io/leaflet-geoman-free@2.3.0/dist/leaflet-geoman.min.js"></script>
 <script src="assets/app.js"></script>
 </body>
 </html>

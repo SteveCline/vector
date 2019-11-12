@@ -1,0 +1,230 @@
+body { margin:0; padding:0; font-family: Arial, Helvetica, sans-serif; color: #333;}
+#map { position:absolute; top:0; right:0; bottom:0; left:350px;}
+#sidebar {
+	position: absolute;
+	background: #fff;
+	width: 350px;
+	height: 100%;
+	z-index:401;
+	overflow: auto;
+	box-shadow: 2px 0 2px rgba(0,0,0,0.1);
+}
+#layerBox {
+	padding: 16px 0;
+}
+#edit-pane {
+	position: fixed;
+	bottom: 0px;
+	right: 0;
+	width: 300px;
+	height: 460px;
+	background: #fff;
+	z-index: 1000;
+	overflow: auto;
+	display:none;
+	box-shadow: -2px -2px 2px rgba(0,0,0,0.1);
+	animation: pane-in 0.4s;
+}
+@keyframes pane-in {
+	from{right:-300px;opacity:0}
+	to{right:0;opacity:1}
+}
+#edit-pane-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+#lat-lng-pane {
+	font-size: 10px;
+    position: fixed;
+    bottom: 0px;
+    left: 350px;
+    background: rgba(0,0,0,0.4);
+    color: #fff;
+    padding: 2px 4px;
+    z-index: 400;
+    display: none;
+}
+#attribute-pane-container {
+    overflow: auto;
+	height: 346px;
+}
+#attribute-pane {
+	list-style-type: none;
+	padding: 16px;
+	margin: 0;
+}
+#attribute-pane li {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.geojson-layer {
+	padding: 8px 0;
+	white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.geojson-layer:hover {
+	background: #f0f0f0;
+}
+.geojson-layer input[type=checkbox] {
+	margin-right: 8px;
+	margin-left: 16px;
+	height: 16px;
+	width: 16px;
+	cursor: pointer;
+}
+.style-patch svg {
+	width:22px;
+	height:16px;
+	margin-right:8px;
+	cursor: pointer;
+}
+.layer-btn {
+	border: none;
+	background: transparent;
+	float: right;
+	padding: 4px 5px 0 5px;
+	margin-right: 8px;
+	border-radius: 4px;
+	cursor: pointer;
+	color: #38f;
+}
+.layer-btn.settings-btn {
+	margin-right: 4px;
+}
+.layer-btn:hover {
+	background: #38f;
+}
+.layer-btn:hover path, .layer-btn:hover circle {
+	fill: #fff;
+}
+.box {
+	margin: 16px 0;
+    padding: 16px
+}
+.red-box {
+	border: 2px solid #e74c3c;
+	color: #e74c3c;
+	background: rgba(231,76,60,0.2);
+}
+.blue-box {
+	border: 2px solid #38f;
+	color: #38f;
+	background: rgba(51,136,255,0.2);
+}
+.btn {
+	border: none;
+	font-size: 12px;
+	color: #fff;
+	cursor: pointer;
+	padding: 8px 16px;
+}
+.blue-btn {
+	background-color: #38f;
+}
+.blue-btn:hover {
+	background-color: #2776e6;
+}
+.green-btn {
+	background-color: #2ecc71;
+}
+.green-btn:hover {
+	background-color: #27ae60;
+}
+.red-btn {
+	background-color: #e74c3c;
+}
+.red-btn:hover {
+	background-color: #c93c2e;
+}
+.modal {
+	display: none;
+	position: fixed; 
+	z-index: 1001; 
+	left: 0;
+	top: 0;
+	width: 100%; 
+	height: 100%;
+	background-color: rgba(0,0,0,0.6); 
+	overflow: auto; 
+}
+.modal-body {
+	background: #fff;
+	margin: auto;
+	margin-top: 50px;
+	margin-bottom: 50px;
+	width: 640px;
+	box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+}
+.modal-head {
+	background-color: #38f;
+	color: white;
+	padding: 16px;
+}
+.modal-content {
+	padding: 16px;
+}
+input[type=text], input[type=file], select {
+	width: 100%;
+	padding: 12px;
+	border: 1px solid #ccc;
+	box-sizing: border-box;
+	margin-bottom: 16px;
+}
+input[type=text]:focus, select:focus {
+	border: 1px solid #38f;
+}
+#prop-list input[type=text], #add-remove-prop-list input[type=text] {
+	margin-bottom: 4px;
+}
+#add-remove-prop-list input[type=text] {
+	margin-right: -73px;
+}
+#prop-list input[type=text]:last-of-type {
+	margin-bottom: 16px;
+}
+.color-picker {
+	background:none;
+	border:none;
+	margin-top:4px;
+	height:32px;
+	padding:0;
+}
+.slider {
+    -webkit-appearance: none;
+	width: 98%;
+	height: 8px;
+	margin-top: 15px;
+    background: #ccc;
+    outline: none;
+}
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #38f;
+    cursor: pointer;
+}
+.slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #38f;
+    cursor: pointer;
+}
+.grid-container {
+	display: grid;
+	grid-template-columns: 120px auto;
+	grid-gap: 16px;
+	margin-bottom: 16px;
+}
+g > path {
+	animation: fadein 600ms;
+}
+@keyframes fadein {
+	from { opacity: 0; }
+	to   { opacity: 1; }
+}
