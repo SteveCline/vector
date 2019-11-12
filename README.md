@@ -1,5 +1,4 @@
-<img src="img/logo-main.svg" height="42">
-Vector is a GIS viewer and editing tool for Esri Feature Services and Map Services.
+<img src="assets/logo-main.svg" height="42">
+Vector is simple GeoJSON data editor. It was made to be easy to use for GIS folks and anyone who works with geospatial data.
 
-https://vector.rocks<br>
-https://vector.rocks/info.html
+https://vector.rocks
