@@ -34,7 +34,6 @@ function createSvgLine(coordArray){
         yElevation.push(coordArray[i][2]);
     }
     var points = "-1000," + graphHeight + " ";
-    //var points = "";
     var elevationLen = yElevation.length;
     var elevationMax = Math.max(...yElevation);
     var elevationMin = Math.min(...yElevation);
@@ -51,18 +50,13 @@ function createSvgLine(coordArray){
     }
     points = points + " " + (graphWidth + 1000) + "," + graphHeight;
     graphLine.setAttributeNS(null, "points", points);
-    createLabels(6,xDistanceTotalSum);
+    createLabels(6,trailLength);
 }
-//createSvgLine(trailsData.features[28].geometry.coordinates);
-//console.log(trailsData.features[28].properties);
 
 function createLabels(numb,trailLengthFeet){
     var oldLabels = svg.querySelectorAll(".graph-label");
     oldLabels.forEach(e => e.remove());
     var lenMiles = trailLengthFeet / 5280;
-    console.log("Trail Len Ft " + trailLengthFeet);
-    console.log("Trail Len Shape " + trailsData.features[selectedTrailFeatureNumb].properties.Shape_Leng);
-    console.log("Trail Len Mi " + lenMiles);
     var counter = 0;
     var distance = 0;
     for (var i = 0; i < numb - 1; i++){
@@ -86,18 +80,18 @@ svg.appendChild(vertLine);
 function addVertLine(e){
     var x;
     if (e.type == "mousemove"){
-        x = e.clientX - 10;
+        x = e.clientX - 12;
     }
     else {
-        x = e.touches[0].clientX - 10;
+        x = e.touches[0].clientX - 12;
     }
     vertLine.setAttributeNS(null,"points", x + ",0 " + x + "," + graphHeight);
-    var distInMiles = (trailLength / 5280) * (x / graphWidth);
+    var distInMiles = (trailLength / 5280) * ( x / graphWidth);
     var along = turf.along(trailsData.features[selectedTrailFeatureNumb],distInMiles,{units:"miles"});
     var explode = turf.explode(trailsData.features[selectedTrailFeatureNumb]);
     var near = turf.nearestPoint(along,explode);
     map.getSource("locator-source").setData(along);
-    graphDetails.innerHTML = distInMiles.toFixed(2) + " mi<br>" + Math.round(near.geometry.coordinates[2]).toLocaleString("en") + " ft";
+    graphDetails.innerHTML = distInMiles.toFixed(2) + " mi<br>" + near.geometry.coordinates[2].toLocaleString("en") + " ft";  
 }
 function removeVertLine(e){
     vertLine.setAttributeNS(null,"points", "");
@@ -105,7 +99,7 @@ function removeVertLine(e){
     graphDetails.innerText = "";
 }
 svg.addEventListener("mousemove", addVertLine);
-svg.addEventListener("mouseout", removeVertLine);
+svg.addEventListener("mouseleave", removeVertLine);
 svg.addEventListener("touchstart", addVertLine);
 svg.addEventListener("touchmove", addVertLine);
 svg.addEventListener("touchend", removeVertLine);
