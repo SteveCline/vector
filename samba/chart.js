@@ -12,8 +12,8 @@ graphLine.classList.add("graph-line");
 svg.appendChild(graphLine);
 graph.appendChild(svg);
 //GLOBALS FOR SELECTED FEATURE
-var trailLength;
-var selectedTrailFeatureNumb;
+var trailLength = 0;
+var selectedTrailFeatureNumb = 0;
 
 window.addEventListener("resize", function(){
     graphWidth = graph.clientWidth;
