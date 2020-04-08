@@ -21,6 +21,10 @@ window.addEventListener("resize", function(){
     createSvgLine(trailsData.features[selectedTrailFeatureNumb].geometry.coordinates);
 });
 
+graphDetails.addEventListener("click",function(e){
+    removeStuff();
+});
+
 function createSvgLine(coordArray){
     var xDistance = [0]; //X Values Distances between lat lng
     var yElevation = []; //Y Values Elevations
@@ -91,12 +95,14 @@ function addVertLine(e){
     var explode = turf.explode(trailsData.features[selectedTrailFeatureNumb]);
     var near = turf.nearestPoint(along,explode);
     map.getSource("locator-source").setData(along);
+    graphDetails.style.fontSize = "16px";
     graphDetails.innerHTML = distInMiles.toFixed(2) + " mi<br>" + near.geometry.coordinates[2].toLocaleString("en") + " ft";  
 }
 function removeVertLine(e){
     vertLine.setAttributeNS(null,"points", "");
     map.getSource("locator-source").setData({"type": "Feature","geometry": {"type": "Point","coordinates": [0,-90]}});
-    graphDetails.innerText = "";
+    graphDetails.style.fontSize = "26px";
+    graphDetails.innerHTML = "&times;";
 }
 svg.addEventListener("mousemove", addVertLine);
 svg.addEventListener("mouseleave", removeVertLine);
