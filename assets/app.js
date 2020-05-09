@@ -590,7 +590,7 @@ downloadShpButton.addEventListener("click",function(e){
   var geoJson = layerList[activeLayer].layer.toGeoJSON(14);
   var name = layerList[activeLayer].layerName;
   var options = {
-    file: name + "_shapefile",
+    file: "download",
     types: {point:name,polygon:name,polyline:name}
   };
   shpwrite.download(geoJson, options);
