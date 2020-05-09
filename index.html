@@ -50,8 +50,9 @@
 					<option value="LineString">LineString</option>
 					<option value="Point">Point</option>
 				</select>
-			<label>Properties List (Optional)</label>
+			<label>Properties (Optional)</label>
 			<div id="prop-list">
+				<input type="text" placeholder="Enter a property name">
 				<input type="text" placeholder="Enter a property name">
 			</div>
 			<button class="btn blue-btn" id="add-property">Add Property</button>
@@ -79,15 +80,15 @@
 		<div class="modal-content">
 			<label>Rename GeoJSON Feature Collection</label>
 			<input type="text" id="rename-fc" placeholder="Enter a name for your GeoJSON Feature Collection">
-			<label>Properties List</label><span style="float:right;color:#e74c3c;font-size:12px;">Warning: deletes property data for all features</span>
+			<label>Properties</label><span style="float:right;color:#e74c3c;font-size:12px;">Warning: deletes property data for all features</span>
 			<div id="add-remove-prop-list"></div>
-			<button class="btn blue-btn" id="add-property-2">Add Property</button>
-			<div class="box red-box">
-				<button class="btn red-btn close-modal" id="delete-fc">Delete GeoJSON</button> Delete GeoJSON and remove from map
-			</div>
-			<div class="box blue-box">
-				<a id="download-geojson" style="text-decoration: none;"><button class="btn blue-btn">Download GeoJSON</button></a> Need a shapefile? <a href="http://ogre.adc4gis.com/" target="_blank" style="color:#38f;">Convert Here</a>
-			</div>
+			<button class="btn blue-btn" id="add-property-2" style="margin-bottom:16px;">Add Property</button>
+			<fieldset>
+				<legend>Export Data</legend>
+				<a id="download-geojson" style="text-decoration: none;"><button class="btn blue-btn">Download as GeoJSON</button></a>
+				<button class="btn blue-btn close-modal" id="download-shp">Download as Shapefile</button>
+				<button class="btn red-btn close-modal" id="delete-fc">Delete Layer</button>
+			</fieldset>
 			<button class="btn red-btn close-modal">Cancel</button>
 			<button class="btn green-btn" id="apply-settings">Apply Settings</button>
 		</div>
@@ -131,5 +132,6 @@
   crossorigin=""></script>
 <script src="https://unpkg.com/@geoman-io/leaflet-geoman-free@2.3.0/dist/leaflet-geoman.min.js"></script>
 <script src="assets/app.js"></script>
+<script src="assets/shp.js"></script>
 </body>
 </html>
