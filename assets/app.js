@@ -29,6 +29,7 @@ var attributeList = document.querySelector("#attribute-pane");
 var latLngPane = document.getElementById("lat-lng-pane");
 var addGeoJsonButton = document.querySelector("#add-geojson-map");
 var downloadGeoJsonButton = document.querySelector("#download-geojson");
+var downloadShpButton = document.querySelector("#download-shp");
 var deleteFCButton = document.querySelector("#delete-fc");
 //LAYER LIST HOLDS ALL DATA OBJECTS
 var layerList = [];
@@ -68,6 +69,7 @@ map.on("mouseover",function(e){
 
 addNewFCButton.addEventListener("click",function(e){
 	modalAddNewFC.style.display = "block";
+  document.querySelector("#new-fc-name").focus();
 });
 addPropertyButton.addEventListener("click",function(e){
   createPropertyListItem(propertyList);
@@ -584,6 +586,16 @@ downloadGeoJsonButton.addEventListener("click",function(e){
   downloadGeoJsonButton.setAttribute("download",fileName);
 });
 
+downloadShpButton.addEventListener("click",function(e){
+  var geoJson = layerList[activeLayer].layer.toGeoJSON(14);
+  var name = layerList[activeLayer].layerName;
+  var options = {
+    file: name + "_shapefile",
+    types: {point:name,polygon:name,polyline:name}
+  };
+  shpwrite.download(geoJson, options);
+});
+
 deleteFCButton.addEventListener("click",function(e){
   var c = confirm("Are you sure you want to delete " + layerList[activeLayer].layerName + "?");
   if (c){
@@ -595,5 +607,29 @@ deleteFCButton.addEventListener("click",function(e){
     closeAllModals();
   }
 });
+
+document.addEventListener("keydown", function(e){
+  /*if (e.key === "Enter" && modalAddNewFC.style.display === "block" && document.activeElement != addPropertyButton){
+    createNewFCButton.click();
+  }
+  if (e.key === "Enter" && modalStyle.style.display === "block"){
+    applyStyle.click();
+  }
+  if (e.key === "Enter" && modalSettings.style.display === "block"){
+    applySettings.click();
+  }*/
+  if (e.key === "Escape"){
+    closeAllModals();
+  }
+});
+
+
+/*
+window.addEventListener("beforeunload", function (e) {
+  e.preventDefault();
+  e.returnValue = "";
+});*/
+
+
 
 
