@@ -587,7 +587,7 @@ downloadGeoJsonButton.addEventListener("click",function(e){
 });
 
 function convertGeoJsonToShpThenDownload(geoJson,filename){
-  var url = "http://ogre.adc4gis.com/convertJson";
+  var url = "https://ogre.adc4gis.com/convertJson";
   var options = {
     method: "POST",
     headers: {"Content-type":"application/x-www-form-urlencoded"}, 
