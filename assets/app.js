@@ -586,14 +586,30 @@ downloadGeoJsonButton.addEventListener("click",function(e){
   downloadGeoJsonButton.setAttribute("download",fileName);
 });
 
+function convertGeoJsonToShpThenDownload(geoJson,filename){
+  var url = "http://ogre.adc4gis.com/convertJson";
+  var options = {
+    method: "POST",
+    headers: {"Content-type":"application/x-www-form-urlencoded"}, 
+    body: "json=" + JSON.stringify(geoJson)
+  };
+  fetch(url,options)
+  .then(function(response){
+    return response.blob();
+  })
+  .then(function(data){
+    var link = document.createElement("a");
+    document.body.append(link);
+    link.href = URL.createObjectURL(data);
+    link.download = filename + ".zip";
+    link.click();
+  });
+}
+
 downloadShpButton.addEventListener("click",function(e){
   var geoJson = layerList[activeLayer].layer.toGeoJSON(14);
   var name = layerList[activeLayer].layerName;
-  var options = {
-    file: "download",
-    types: {point:name,polygon:name,polyline:name}
-  };
-  shpwrite.download(geoJson, options);
+  convertGeoJsonToShpThenDownload(geoJson,name);
 });
 
 deleteFCButton.addEventListener("click",function(e){
@@ -609,27 +625,7 @@ deleteFCButton.addEventListener("click",function(e){
 });
 
 document.addEventListener("keydown", function(e){
-  /*if (e.key === "Enter" && modalAddNewFC.style.display === "block" && document.activeElement != addPropertyButton){
-    createNewFCButton.click();
-  }
-  if (e.key === "Enter" && modalStyle.style.display === "block"){
-    applyStyle.click();
-  }
-  if (e.key === "Enter" && modalSettings.style.display === "block"){
-    applySettings.click();
-  }*/
   if (e.key === "Escape"){
     closeAllModals();
   }
 });
-
-
-/*
-window.addEventListener("beforeunload", function (e) {
-  e.preventDefault();
-  e.returnValue = "";
-});*/
-
-
-
-
