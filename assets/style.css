@@ -1,4 +1,17 @@
 body { margin:0; padding:0; font-family: Arial, Helvetica, sans-serif; color: #333;}
+.sponsor-link {
+	text-align:center;
+	padding-bottom:16px;
+}
+.sponsor-link a:link, .sponsor-link a:visited {
+	color: #38f;
+}
+.sponsor-link a:hover {
+	color: #2776e6;
+}
+.sponsor-link a:active {
+	color: #2776e6;
+}
 #map { position:absolute; top:0; right:0; bottom:0; left:350px;}
 #sidebar {
 	position: absolute;
