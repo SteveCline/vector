@@ -1,3 +1,43 @@
+.mapboxgl-map.mouse-pointer .mapboxgl-canvas-container.mapboxgl-interactive {
+  	cursor: pointer;
+}
+.mapboxgl-map.mouse-move .mapboxgl-canvas-container.mapboxgl-interactive {
+  	cursor: move;
+}
+.mapboxgl-map.mouse-add .mapboxgl-canvas-container.mapboxgl-interactive {
+  	cursor: crosshair;
+}
+.mapboxgl-map.mouse-move.mode-direct_select .mapboxgl-canvas-container.mapboxgl-interactive {
+	cursor: grab;
+	cursor: -moz-grab;
+	cursor: -webkit-grab;
+}
+.mapboxgl-map.mode-direct_select.feature-vertex.mouse-move .mapboxgl-canvas-container.mapboxgl-interactive {
+	cursor: move;
+}
+.mapboxgl-map.mode-direct_select.feature-midpoint.mouse-pointer .mapboxgl-canvas-container.mapboxgl-interactive {
+	cursor: grabbing;
+}
+.mapboxgl-map.mode-direct_select.feature-feature.mouse-move .mapboxgl-canvas-container.mapboxgl-interactive {
+	cursor: grab;
+}
+.mapboxgl-map.mode-static.mouse-pointer  .mapboxgl-canvas-container.mapboxgl-interactive {
+	cursor: grab;
+	cursor: -moz-grab;
+	cursor: -webkit-grab;
+}
+.mapbox-gl-draw_boxselect {
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    background: rgba(0,0,0,.1);
+    border: 2px dotted #fff;
+    opacity: 0.5;
+}
+
 body {
     margin:0;
     padding:0;
@@ -294,6 +334,3 @@ input[type=range] {
 	padding: 0.5em;
 	cursor: default;
 }
-
-
-

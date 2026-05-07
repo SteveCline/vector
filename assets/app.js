@@ -8,7 +8,7 @@ const map = new mapboxgl.Map({
     config: {basemap: {showPointOfInterestLabels:false,show3dObjects:false}},
     bounds: savedBounds,
     minZoom: 3,
-    accessToken: "pk.eyJ1IjoibWNjb3JtaWNrdGF5bG9yIiwiYSI6IkV1VTYyVXMifQ.zCU42TqxaSpRJvmH4Q094A",
+    accessToken: "pk.eyJ1Ijoic3RldmVjIiwiYSI6ImNtb3FuNW1paDBqa3oycG9oYzVkcTh6ZjQifQ.3lQ_bVT0JJgJjdTg5Ow85A",
     attributionControl: false
 });
 map.addControl(new mapboxgl.NavigationControl({visualizePitch:true}),"top-right");
@@ -218,11 +218,12 @@ map.on("load",function(){
     populateSelectEdit();
 });
 map.on("style.load",function(){
+    map.setTerrain();
     if (basemapToggle){
         globalGeoJsonArray.forEach(fc => addLocalStorageLayer(fc));
         if (map.getLayer(globalActiveEditId + "-point")){
             setPointDrawStyle();
-        }   
+        }
     }
     basemapToggle = false;
 });
@@ -969,8 +970,9 @@ function getMeasure(feature){
         return turf.round(lng,6) + ", " + turf.round(lat,6);
     }
     if (geoType === "MultiPoint"){
-        //MAKE BETTER
-        return JSON.stringify(feature.geometry.coordinates);
+        const f = turf.truncate(feature,{precision:6});
+        const str = JSON.stringify(f.geometry.coordinates);
+        return str.slice(1,-1);
     }
 }
 
@@ -1128,7 +1130,17 @@ let drawStyle = [{
     }
 }];
 
-const draw = new MapboxDraw({displayControlsDefault: false, styles: drawStyle});
+const draw = new MapboxDraw({
+    displayControlsDefault: false,
+    styles: drawStyle,
+    modes: {
+        ...MapboxDraw.modes,
+        direct_select: {
+            ...MapboxDraw.modes.direct_select,
+            dragFeature(){}
+        }
+    }
+});
 
 function addDefaultLayerToMap(fcName,geoType,geoJson,layerID){
     const source = layerID + "-source";
